@@ -29,7 +29,7 @@ import java.awt.Point;
 public class UBNTRadio extends UBNTDevice {
 
     public UBNTRadio() {
-        wirelessConnections = 10;
+        wirelessConnections = 100;
     }
 
     public UBNTRadio(Point p) {

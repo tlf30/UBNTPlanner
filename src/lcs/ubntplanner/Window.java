@@ -839,6 +839,7 @@ public class Window extends javax.swing.JFrame {
                         int deviceB = selectedDevice;
                         if (deviceA == deviceB || deviceB == -1) {
                             linkWireless = false;
+                            System.out.println("Invalid device link abort");
                             return;
                         }
                         if (linkWireless) {
@@ -849,6 +850,8 @@ public class Window extends javax.swing.JFrame {
                                 l.b = devices.get(deviceB);
                                 links.add(l);
                                 System.out.println("Connected link");
+                            } else {
+                                System.out.println("Too many wireless links");
                             }
                             linkWireless = false;
                         } else {
@@ -858,6 +861,8 @@ public class Window extends javax.swing.JFrame {
                                 l.b = devices.get(deviceB);
                                 links.add(l);
                                 System.out.println("Connected link");
+                            } else {
+                                System.out.println("Too many wired links");
                             }
                         }
 
@@ -880,34 +885,35 @@ public class Window extends javax.swing.JFrame {
                         panel.repaint();
                         return;
                     }
-                    if (!setScale) {
-                        if (!e.isPopupTrigger()) {
-                            System.out.println("Dragging");
-                            mouseX = e.getX();
-                            mouseY = e.getY();
-                        } else {
-                            showPopup(e);
-                        }
-                    } else {
+                    if (setScale) {
                         a = e.getPoint();
+                        return;
                     }
+                    if (e.isPopupTrigger()) {
+                        showPopup(e);
+                        return;
+                    }
+                    System.out.println("Dragging");
+                    mouseX = e.getX();
+                    mouseY = e.getY();
+
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    if (!setScale) {
-                        showPopup(e);
-                    } else {
+                    if (setScale) {
+                        setScale = false;
                         b = e.getPoint();
                         double distance = a.distance(b);
                         System.out.println("Distance: " + distance);
                         distance = distance / scale;
                         System.out.println("Normilized: " + distance);
                         double ans = Double.valueOf(JOptionPane.showInputDialog("Enter distance in feet", JOptionPane.INFORMATION_MESSAGE));
-                        setScale = false;
                         keyScale = distance / ans;
                         System.out.println("1 ft = " + keyScale);
+                        return;
                     }
+                    showPopup(e);
                 }
 
                 private void showPopup(MouseEvent e) {
@@ -946,11 +952,12 @@ public class Window extends javax.swing.JFrame {
 
         @Override
         public void paint(Graphics g) {
+
             super.paintComponent(g);
+            Graphics2D g2 = (Graphics2D) g;
+
             if (image != null) {
-                Graphics2D g2 = (Graphics2D) g;
-                //g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                //       RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+
                 int w = getWidth();
                 int h = getHeight();
                 int imageWidth = image.getWidth();
@@ -992,7 +999,7 @@ public class Window extends javax.swing.JFrame {
         public int getWiredLinks(int index) {
             int i = 0;
             for (Link l : links) {
-                if (l.a == devices.get(index) || l.b == devices.get(index) && l.wired) {
+                if ((l.a == devices.get(index) || l.b == devices.get(index)) && l.wired) {
                     i++;
                 }
             }
@@ -1002,7 +1009,7 @@ public class Window extends javax.swing.JFrame {
         public int getWirelessLinks(int index) {
             int i = 0;
             for (Link l : links) {
-                if (l.a == devices.get(index) || l.b == devices.get(index) && !l.wired) {
+                if ((l.a == devices.get(index) || l.b == devices.get(index)) && !l.wired) {
                     i++;
                 }
             }
@@ -1022,16 +1029,12 @@ public class Window extends javax.swing.JFrame {
 
         public void setScale(double s) {
             scale = s;
-            revalidate();      // update the scroll pane
+            revalidate();
             repaint();
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -1054,8 +1057,8 @@ public class Window extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Window().setVisible(true);
             }
