@@ -1,0 +1,15 @@
+TODO:
+1. Finish adding AirMax devices
+  LiteBeam
+  NanoBeam
+  PowerBeam
+  PowerBeam ISO
+  NanoBridge
+  NanoStation
+  PicoStation
+  PowerBridge
+  Rocket
+  
+2. Implement antenna selection
+
+3. Make GUI more user friendly
