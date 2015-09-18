@@ -21,7 +21,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Trevor Flynn
+ * @author Trevor Flynn <trevorflynn@liquidcrystalstudios.com>
  */
 public class Link implements Serializable {
     public boolean wired = true;

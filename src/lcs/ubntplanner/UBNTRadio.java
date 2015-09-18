@@ -23,11 +23,13 @@ import java.awt.Point;
 
 /**
  *
- * @author Trevor Flynn
+ * @author Trevor Flynn <trevorflynn@liquidcrystalstudios.com>
  */
 
 public class UBNTRadio extends UBNTDevice {
 
+    public UBNTAntenna antenna = null;
+    
     public UBNTRadio() {
         wirelessConnections = 100;
     }

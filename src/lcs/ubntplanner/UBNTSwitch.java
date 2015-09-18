@@ -23,7 +23,7 @@ import java.awt.Point;
 
 /**
  *
- * @author Trevor Flynn
+ * @author Trevor Flynn <trevorflynn@liquidcrystalstudios.com>
  */
 
 public class UBNTSwitch extends UBNTDevice {

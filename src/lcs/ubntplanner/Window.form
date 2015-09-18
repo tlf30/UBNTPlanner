@@ -22,6 +22,11 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="jMenuItem8">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+        </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Set Scale"/>

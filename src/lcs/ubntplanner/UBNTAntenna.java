@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2015 Trevor Flynn
+/*
+ * Copyright (C) 2015 Trevor Flynn <trevorflynn@liquidcrystalstudios.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,18 +17,10 @@
  */
 package lcs.ubntplanner;
 
-
-import java.io.Serializable;
-import java.util.ArrayList;
-
 /**
  *
  * @author Trevor Flynn <trevorflynn@liquidcrystalstudios.com>
  */
-
-public class SaveObj implements Serializable {
-        public ArrayList<UBNTDevice> devs;
-        public ArrayList<Link> links;
-        public String img;
-        public double keyScale;
-    }
+public class UBNTAntenna {
+    
+}

@@ -24,7 +24,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Trevor Flynn
+ * @author Trevor Flynn <trevorflynn@liquidcrystalstudios.com>
  */
 
 public class UBNTDevice implements Cloneable, Serializable {
