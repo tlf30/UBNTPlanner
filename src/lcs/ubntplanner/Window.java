@@ -42,6 +42,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javax.imageio.ImageIO;
 import javax.swing.ComboBoxModel;
@@ -997,14 +998,29 @@ public class Window extends javax.swing.JFrame {
                 @Override
                 public void handle(ZoomEvent event) {
                     System.out.println("Zoom: " + event.getZoomFactor());
-                    
+                    event.consume();
                 }
             });
             scene.setOnMousePressed(new EventHandler<javafx.scene.input.MouseEvent>() {
 
                 @Override
                 public void handle(javafx.scene.input.MouseEvent t) {
-                   //System.out.println("Clicked");
+                    //System.out.println("Clicked");
+                    t.consume();
+                }
+            });
+            scene.setOnScroll(new EventHandler<ScrollEvent>() {
+                @Override
+                public void handle(ScrollEvent event) {
+                    System.out.println("Scroll: " + event.getDeltaY());
+                    if (event.getDeltaY() > 0) {
+                        System.out.println("X Out");
+                        panel.setScale(scale - 0.1);
+                    } else if (event.getDeltaY() < 0) {
+                         System.out.println("X In");
+                        panel.setScale(scale + 0.1);
+                    }
+                    event.consume();
                 }
             });
         }
@@ -1087,9 +1103,11 @@ public class Window extends javax.swing.JFrame {
         }
 
         public void setScale(double s) {
-            scale = s;
-            revalidate();
-            repaint();
+            if (s > 0 && s < 100) {
+                scale = s;
+                revalidate();
+                repaint();
+            }
         }
     }
 
