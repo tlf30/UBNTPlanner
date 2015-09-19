@@ -35,6 +35,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Vector;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.input.ZoomEvent;
 import javax.imageio.ImageIO;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -815,8 +823,9 @@ public class Window extends javax.swing.JFrame {
                 JOptionPane.OK_OPTION);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public class UBNTPanel extends JPanel {
+    public class UBNTPanel extends JFXPanel {
 
+        Scene scene;
         int mouseX = 0;
         int mouseY = 0;
 
@@ -974,14 +983,36 @@ public class Window extends javax.swing.JFrame {
                     jMenuItem5.setEnabled(selectedDevice > -1);
                 }
             };
+
             addMouseMotionListener(ma);
             addMouseListener(ma);
+            Platform.runLater(this::createScene);
+        }
+
+        public void createScene() {
+            Group g = new Group();
+            scene = new Scene(g, getWidth(), getHeight());
+            setScene(scene);
+            scene.setOnZoom(new EventHandler<ZoomEvent>() {
+                @Override
+                public void handle(ZoomEvent event) {
+                    System.out.println("Zoom: " + event.getZoomFactor());
+                    
+                }
+            });
+            scene.setOnMousePressed(new EventHandler<javafx.scene.input.MouseEvent>() {
+
+                @Override
+                public void handle(javafx.scene.input.MouseEvent t) {
+                   //System.out.println("Clicked");
+                }
+            });
         }
 
         @Override
         public void paint(Graphics g) {
 
-            super.paintComponent(g);
+            super.paint(g);
             Graphics2D g2 = (Graphics2D) g;
 
             if (image != null) {
